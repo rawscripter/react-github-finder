@@ -1,53 +1,45 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
 
-class Search extends Component {
-    state = {
-        text: ''
-    }
+const Search = ({showClearButton, clearUsers, searchUsers, setAlert}) => {
+    const [text, setText] = useState('');
 
-    static propTypes = {
-        clearUsers: PropTypes.func.isRequired,
-        searchUsers: PropTypes.func.isRequired,
-        setAlert: PropTypes.func.isRequired,
-        showClearButton: PropTypes.bool.isRequired,
+
+    const onChange = (e) => {
+        setText(e.target.value)
     }
-    onChange = (e) => {
-        this.setState({
-            text: e.target.value
-        })
-    }
-    onSubmit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        if (this.state.text.trim() === '') {
-            this.props.setAlert('Please enter something', 'light');
+        if (text.trim() === '') {
+            setAlert('Please enter something', 'light');
             return
         }
-
-        this.props.searchUsers(this.state.text);
-        this.setState({
-            text: ''
-        })
+        searchUsers(text);
+        setText('');
     }
 
-    render() {
-        const {showClearButton, clearUsers} = this.props;
-        return (
-            <Fragment>
-                <form onSubmit={this.onSubmit} className='form'>
-                    <input value={this.state.text} onChange={this.onChange} type="text" name="text"
-                           placeholder="Search User..."/>
-                    <input type="submit" value="Search" className="btn btn-dark btn-block"/>
-                </form>
+    return (
+        <Fragment>
+            <form onSubmit={onSubmit} className='form'>
+                <input value={text} onChange={onChange} type="text" name="text"
+                       placeholder="Search User..."/>
+                <input type="submit" value="Search" className="btn btn-dark btn-block"/>
+            </form>
 
-                {showClearButton === true &&
-                <button className="btn btn-light btn-block" onClick={clearUsers}>
-                    Clear
-                </button>
-                }
-            </Fragment>
-        );
-    }
+            {showClearButton === true &&
+            <button className="btn btn-light btn-block" onClick={clearUsers}>
+                Clear
+            </button>
+            }
+        </Fragment>
+    );
+
+}
+Search.propTypes = {
+    clearUsers: PropTypes.func.isRequired,
+    searchUsers: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
+    showClearButton: PropTypes.bool.isRequired,
 }
 
 export default Search;
