@@ -2,12 +2,11 @@ import React, {useReducer} from 'react';
 import axios from "axios";
 import GithubContext from './githubContext'
 import GithubReducer from './githubReducer'
+
 import {
-    SET_ALERT,
     SET_LOADING,
     SEARCH_USERS,
     CLEAR_USERS,
-    GET_USERS,
     GET_REPOS,
     GET_USER
 } from '../types';
@@ -37,7 +36,6 @@ const GithubState = props => {
     const getUser = async (username) => {
         setLoading();
         const res = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-        setLoading(false);
         dispatch({
             type: GET_USER,
             payload: res.data

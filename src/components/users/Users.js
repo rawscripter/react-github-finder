@@ -5,27 +5,22 @@ import GithubContext from "../../context/github/githubContext";
 
 const Users = () => {
     const githubContext = useContext(GithubContext);
-    const {users,loading} = githubContext;
+    const {users, loading} = githubContext;
 
     if (loading)
         return (
             <Spinner/>
         )
-    return (
-        <div style={userStyle}>
-            {users.map(user => (
-                <div key={user.id}>
-                    <UserItem user={user}/>
-                </div>
-            ))}
-        </div>
-    );
-}
+        return (
+            <div className="userGrid">
+                {users.map(user => (
+                    <div key={user.id}>
+                        <UserItem user={user}/>
+                    </div>
+                ))}
+            </div>
+        )
+    }
 
-const userStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3,1fr)',
-    gridGap: '1rem',
-};
 
 export default Users;

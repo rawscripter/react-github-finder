@@ -1,6 +1,5 @@
 import React, {useEffect, useContext, Fragment} from 'react';
 import Spinner from "../layout/Spinner";
-import PropTypes from 'prop-types';
 import GithubContext from "../../context/github/githubContext";
 import {
     Link
